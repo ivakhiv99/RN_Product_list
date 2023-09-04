@@ -1,3 +1,4 @@
 import Header from "./Header";
+import ProductCart from "./ProductCart";
 
-export { Header }
+export { Header, ProductCart }

@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from "react";
 import { Product } from "../types";
 import { useFetch } from "../hooks";
+import { ProductCart } from "../components";
 
 
 
@@ -17,7 +18,7 @@ const ProductList = () => {
             setProducts(JSON.parse(dataFromAsyncStorage));
         } else {
             // call fake api here
-            triggerFetch('products?limit=5');
+            triggerFetch('products?limit=10');
         }
     };
 
@@ -44,7 +45,8 @@ const ProductList = () => {
                 renderItem={({item}) => {
                     console.log({item})
                     return (
-                    <Text>{item.title}</Text>
+                    // <Text>{item.title}</Text>
+                    <ProductCart product={item}/>
                 )}}
             />
         </View>
