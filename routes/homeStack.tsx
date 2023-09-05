@@ -15,7 +15,7 @@ const screens = {
         screen:({navigation}: {navigation: NavigationScreenProp<NavigationRoute, NavigationParams>}) => <ProductList/>,
         navigationOptions: ({navigation}: {navigation: NavigationScreenProp<NavigationRoute, NavigationParams>}) => {
             return {
-                header: () => <Header />,
+                header: () => <Header title="Products" navigation={navigation}/>,
                 headerStyle:{
                     height: 60,
                     backgroundColor: 'blue',
