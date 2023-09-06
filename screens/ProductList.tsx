@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FC, useEffect, useState } from "react";
 import { Product } from "../types";
 import { useFetch } from "../hooks";
-import { ProductCart } from "../components";
+import { ProductCard } from "../components";
 import { NavigationParams, NavigationRoute, NavigationScreenProp } from "react-navigation";
 
 interface IProductList {
@@ -12,10 +12,9 @@ interface IProductList {
 
 const ProductList:FC<IProductList> = ({navigation}) => {
     const [products, setProducts] = useState<Product[]>([]);
-    const {data, isLoading, error, triggerFetch } = useFetch();
+    const {data, triggerFetch } = useFetch();
 
     const syncWithAsyncStorage = async () => {
-        console.log('syncWithAsyncStorage');
         const dataFromAsyncStorage = await AsyncStorage.getItem('productList');
         if(dataFromAsyncStorage) {
             setProducts(JSON.parse(dataFromAsyncStorage));
@@ -45,12 +44,9 @@ const ProductList:FC<IProductList> = ({navigation}) => {
         }
     }, [navigation]);
 
-    useEffect(() => {console.log({products})}, [products]);
-
     const navigateToScreen = (productId: string) => navigation.navigate('ProductDetails', {
         id: productId,
     });
-//TODO: ProductCart => ProductCarD
 
     return (
         <View>
@@ -59,7 +55,7 @@ const ProductList:FC<IProductList> = ({navigation}) => {
                 keyExtractor={(item) => item.id}
                 renderItem={({item}) => (
                     <TouchableOpacity onPress={() => navigateToScreen(item.id)}>
-                        <ProductCart product={item}/>
+                        <ProductCard product={item}/>
                     </TouchableOpacity>
                 )}
             />

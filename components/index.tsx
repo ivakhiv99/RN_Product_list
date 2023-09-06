@@ -1,4 +1,4 @@
 import Header from "./Header";
-import ProductCart from "./ProductCart";
+import ProductCard from "./ProductCard";
 
-export { Header, ProductCart }
+export { Header, ProductCard }

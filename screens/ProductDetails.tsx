@@ -16,7 +16,6 @@ const ProductDetails:FC<IProductDetails> = ({navigation}) => {
 		if(products){
 			const id = navigation.getParam('id');
 			const productData = JSON.parse(products).filter((item: Product) => item.id === id)[0];
-			console.log('ProductDetails', {productData});
 			setProduct(productData);
 		}
 	}
@@ -28,7 +27,7 @@ const ProductDetails:FC<IProductDetails> = ({navigation}) => {
 			<ScrollView  style={styles.container}>
 				<View style={styles.imageContainer}>
 					<Image
-						source={{ uri: product.image }}
+						source={product.image ? { uri: product.image } : require('../assets/noPicture.png')}
 						style={styles.productImage}
 						resizeMode="contain"
 					/>
@@ -40,10 +39,6 @@ const ProductDetails:FC<IProductDetails> = ({navigation}) => {
 				</View>
 			</ScrollView>
 		);
-	} else {
-		return(
-			<Text>loader</Text>
-		)
 	}
 };
  

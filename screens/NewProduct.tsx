@@ -1,4 +1,4 @@
-import { Button, Text, TextInput, View, StyleSheet } from "react-native";
+import { Text, TextInput, View, StyleSheet, Pressable, TouchableOpacity } from "react-native";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { FC, useState } from "react";
@@ -64,37 +64,40 @@ const NewProduct:FC<INewProduct> = ({navigation}) => {
         >
             {({values, errors, handleChange, handleSubmit}) => (
                 <View style={styles.formContainer}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Product title"
-                        onChangeText={handleChange('title')}
-                        value={values.title}                        
-                    />
-                    {triedToSubmit && errors.title && <Text style={{ color: 'red' }}>{errors.title}</Text>}
+                    <View>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Product title"
+                            onChangeText={handleChange('title')}
+                            value={values.title}                        
+                        />
+                        {triedToSubmit && errors.title && <Text style={{ color: 'red' }}>{errors.title}</Text>}
 
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Price"
-                        onChangeText={handleChange('price')}
-                        value={values.price}                        
-                    />
-                    {triedToSubmit && errors.price && <Text style={{ color: 'red' }}>{errors.price}</Text>}
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Price"
+                            onChangeText={handleChange('price')}
+                            value={values.price}                        
+                        />
+                        {triedToSubmit && errors.price && <Text style={{ color: 'red' }}>{errors.price}</Text>}
 
-                    <TextInput
-                        style={styles.textArea}
-                        placeholder="Product description"
-                        onChangeText={handleChange('description')}
-                        multiline
-                        numberOfLines={4}
-                        maxLength={500}
-                        value={values.description}                        
-                    />
-                    {triedToSubmit && errors.description && <Text style={{ color: 'red' }}>{errors.description}</Text>}
-
-                    <Button title="Submit" onPress={() => {
+                        <TextInput
+                            style={styles.textArea}
+                            placeholder="Product description"
+                            onChangeText={handleChange('description')}
+                            multiline
+                            numberOfLines={4}
+                            maxLength={500}
+                            value={values.description}                        
+                        />
+                        {triedToSubmit && errors.description && <Text style={{ color: 'red' }}>{errors.description}</Text>}
+                    </View>
+                    <TouchableOpacity  style={styles.submitBtn} onPress={() => {
                         setTriedToSubmit(true);
                         handleSubmit();
-                    }} />
+                    }}>
+                        <Text style={styles.submitBtnText}>Submit</Text>
+                    </TouchableOpacity >
                 </View>
             )}
         </Formik>
@@ -104,6 +107,10 @@ const NewProduct:FC<INewProduct> = ({navigation}) => {
 const styles = StyleSheet.create({
     formContainer: {
         padding: 5,
+        flex:1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        paddingBottom:20,
     },
     input: {
         height: 40,
@@ -121,6 +128,26 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 10,
         borderRadius: 10,
+    },
+    submitBtn: {
+        backgroundColor: 'tomato',
+        width: 200,
+        padding: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        borderRadius: 15,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    submitBtnText: {
+        fontSize: 20,
+        fontWeight: '700',
+        letterSpacing: .7,
+        color: '#fff',
     }
 });
 

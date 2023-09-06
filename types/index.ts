@@ -1,4 +1,3 @@
-
 type NewProductFormData = {
     title: string,
     price: string,
@@ -12,6 +11,5 @@ type Product = {
     price: number;
     description?: string;
 }
-
 
 export { Product, NewProductFormData }
