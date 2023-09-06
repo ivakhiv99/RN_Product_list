@@ -1,15 +1,18 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Product } from "../types";
 import { useFetch } from "../hooks";
 import { ProductCart } from "../components";
+import { NavigationParams, NavigationRoute, NavigationScreenProp } from "react-navigation";
 
+interface IProductList {
+    navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
+}
 
-const ProductList = () => {
+const ProductList:FC<IProductList> = ({navigation}) => {
     const [products, setProducts] = useState<Product[]>([]);
     const {data, isLoading, error, triggerFetch } = useFetch();
-
 
     const syncWithAsyncStorage = async () => {
         const dataFromAsyncStorage = await AsyncStorage.getItem('productList');
@@ -31,6 +34,9 @@ const ProductList = () => {
 
     useEffect(() => {console.log({products})}, [products]);
 
+    const navigateToScreen = (productId: string) => navigation.navigate('ProductDetails', {
+        id: productId,
+    });
 
     return (
         <View>
@@ -38,7 +44,9 @@ const ProductList = () => {
                 data={products}
                 keyExtractor={(item) => item.id}
                 renderItem={({item}) => (
-                    <ProductCart product={item}/>
+                    <TouchableOpacity onPress={() => navigateToScreen(item.id)}>
+                        <ProductCart product={item}/>
+                    </TouchableOpacity>
                 )}
             />
         </View>

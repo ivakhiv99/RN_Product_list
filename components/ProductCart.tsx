@@ -6,17 +6,19 @@ interface IProductCart {
   product: Product;
 };
 
-const ProductCart: React.FC<IProductCart> = ({ product }) => {
-  return (
-    <View style={styles.container}>
-      <Image source={{ uri: product.image }} style={styles.image} />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{product.title}</Text>
-        <Text style={styles.price}>Price: ${product.price.toFixed(2)}</Text>
-      </View>
-    </View>
-  );
-};
+const ProductCart: React.FC<IProductCart> = ({ product }) => (
+	<View style={styles.container}>
+		<Image
+			source={{ uri: product.image }}
+			style={styles.image}
+			resizeMode="contain"
+		/>
+		<View style={styles.textContainer}>
+			<Text style={styles.title}>{product.title}</Text>
+			<Text style={styles.price}>Price: ${product.price.toFixed(2)}</Text>
+		</View>
+	</View>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +27,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderColor: '#ccc',
+	backgroundColor: '#fff',
   },
   image: {
     width: 80,

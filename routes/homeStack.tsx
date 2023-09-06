@@ -12,24 +12,39 @@ import React from "react";
 
 const screens = {
     ProductList: {
-        screen:({navigation}: {navigation: NavigationScreenProp<NavigationRoute, NavigationParams>}) => <ProductList/>,
+        screen:({navigation}: {navigation: NavigationScreenProp<NavigationRoute, NavigationParams>}) => <ProductList  navigation={navigation}/>,
         navigationOptions: ({navigation}: {navigation: NavigationScreenProp<NavigationRoute, NavigationParams>}) => {
             return {
                 header: () => <Header title="Products" navigation={navigation}/>,
                 headerStyle:{
                     height: 60,
-                    backgroundColor: 'blue',
                     padding: 0,
-
                 },
             }
         },
+
     },
     NewProduct: { 
         screen:({navigation}: {navigation: NavigationScreenProp<NavigationRoute, NavigationParams>}) => <NewProduct navigation={navigation}/>,
+        navigationOptions: () => {
+            return {
+                headerStyle:{
+                    backgroundColor: '#64615e',
+                },
+                headerTintColor: "#ffffff",
+            }
+        },
     },
     ProductDetails: { 
-        screen:({navigation}: {navigation: NavigationScreenProp<NavigationRoute, NavigationParams>}) => <ProductDetails/>,
+        screen:({navigation}: {navigation: NavigationScreenProp<NavigationRoute, NavigationParams>}) => <ProductDetails navigation={navigation}/>,
+        navigationOptions: () => {
+            return {
+                headerStyle:{
+                    backgroundColor: '#64615e',
+                },
+                headerTintColor: "#ffffff",
+            }
+        },
     },
 };
 
