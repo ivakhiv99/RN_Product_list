@@ -15,6 +15,7 @@ const ProductList:FC<IProductList> = ({navigation}) => {
     const {data, isLoading, error, triggerFetch } = useFetch();
 
     const syncWithAsyncStorage = async () => {
+        console.log('syncWithAsyncStorage');
         const dataFromAsyncStorage = await AsyncStorage.getItem('productList');
         if(dataFromAsyncStorage) {
             setProducts(JSON.parse(dataFromAsyncStorage));
@@ -30,13 +31,26 @@ const ProductList:FC<IProductList> = ({navigation}) => {
         }
     }, [data]);
 
-    useEffect(() => {syncWithAsyncStorage()}, []);
+    useEffect(() => {
+        syncWithAsyncStorage();
+    }, []);
+
+    useEffect(() => {
+        const shouldRefresh = navigation.getParam('shouldRefresh');
+        if(shouldRefresh) {
+            syncWithAsyncStorage();
+            navigation.setParams({
+                shouldRefresh: false,
+            })
+        }
+    }, [navigation]);
 
     useEffect(() => {console.log({products})}, [products]);
 
     const navigateToScreen = (productId: string) => navigation.navigate('ProductDetails', {
         id: productId,
     });
+//TODO: ProductCart => ProductCarD
 
     return (
         <View>

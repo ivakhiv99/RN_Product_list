@@ -5,6 +5,8 @@ import { FC, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NewProductFormData } from "../types";
 import { NavigationParams, NavigationRoute, NavigationScreenProp } from "react-navigation";
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 
 interface INewProduct {
     navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
@@ -46,8 +48,11 @@ const NewProduct:FC<INewProduct> = ({navigation}) => {
         const dataFromAsyncStorage = await AsyncStorage.getItem('productList');
         if(dataFromAsyncStorage) {
             const newData = JSON.parse(dataFromAsyncStorage);
-            newData.push(values);
-            navigation.goBack();
+            newData.push({...values, price: parseFloat(values.price), id: uuidv4()});
+            await AsyncStorage.setItem('productList',JSON.stringify(newData));
+            navigation.navigate('ProductList', {
+                shouldRefresh: true,
+            });
         }
     } 
 

@@ -7,10 +7,10 @@ type NewProductFormData = {
 
 type Product = {
     id: string;
-    image: string;
+    image?: string;
     title: string;
     price: number;
-    description: string;
+    description?: string;
 }
 
 
