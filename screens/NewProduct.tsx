@@ -1,13 +1,16 @@
 import { Button, Text, TextInput, View, StyleSheet } from "react-native";
 import { Formik } from "formik";
 import * as Yup from 'yup';
-import { useState } from "react";
+import { FC, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NewProductFormData } from "../types";
+import { NavigationParams, NavigationRoute, NavigationScreenProp } from "react-navigation";
 
+interface INewProduct {
+    navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
+}
 
-
-const NewProduct = () => {
+const NewProduct:FC<INewProduct> = ({navigation}) => {
     const [triedToSubmit, setTriedToSubmit] = useState<boolean>(false);
     const initialValues:NewProductFormData = {
         title: '',
@@ -37,7 +40,6 @@ const NewProduct = () => {
         description: Yup.string()
             .min(5, 'Product description must be at least 5 characters long')
             .max(500, "Product description can't be longer than 500 characters")
-
     });
 
     const handleSaveData = async (values:NewProductFormData) => {
@@ -45,7 +47,7 @@ const NewProduct = () => {
         if(dataFromAsyncStorage) {
             const newData = JSON.parse(dataFromAsyncStorage);
             newData.push(values);
-            console.log({newData})
+            navigation.goBack();
         }
     } 
 
@@ -53,11 +55,7 @@ const NewProduct = () => {
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema} 
-            onSubmit={(values) => {
-                console.log('form submited')
-                // TODO: add data to async storage
-                handleSaveData(values);
-            }}
+            onSubmit={(values) => handleSaveData(values)}
         >
             {({values, errors, handleChange, handleSubmit}) => (
                 <View style={styles.formContainer}>
@@ -98,7 +96,6 @@ const NewProduct = () => {
     );
 };
 
-
 const styles = StyleSheet.create({
     formContainer: {
         padding: 5,
@@ -121,6 +118,5 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     }
 });
-
 
 export default NewProduct;

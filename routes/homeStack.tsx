@@ -26,7 +26,7 @@ const screens = {
         },
     },
     NewProduct: { 
-        screen:({navigation}: {navigation: NavigationScreenProp<NavigationRoute, NavigationParams>}) => <NewProduct/>,
+        screen:({navigation}: {navigation: NavigationScreenProp<NavigationRoute, NavigationParams>}) => <NewProduct navigation={navigation}/>,
     },
     ProductDetails: { 
         screen:({navigation}: {navigation: NavigationScreenProp<NavigationRoute, NavigationParams>}) => <ProductDetails/>,
