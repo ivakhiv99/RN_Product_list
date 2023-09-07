@@ -48,8 +48,7 @@ const NewProduct:FC<INewProduct> = ({navigation}) => {
         const dataFromAsyncStorage = await AsyncStorage.getItem('productList');
         if(dataFromAsyncStorage) {
             const newData = JSON.parse(dataFromAsyncStorage);
-            newData.push({...values, price: parseFloat(values.price), id: uuidv4()});
-            await AsyncStorage.setItem('productList',JSON.stringify(newData));
+            await AsyncStorage.setItem('productList',JSON.stringify([{...values, price: parseFloat(values.price), id: uuidv4()}, ...newData]));
             navigation.navigate('ProductList', {
                 shouldRefresh: true,
             });
